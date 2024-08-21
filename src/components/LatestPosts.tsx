@@ -9,11 +9,17 @@ const LatestPosts: React.FC = () => {
 
 
     useEffect(() => {
-        // Fetch posts from the API and dispatch setPosts action
         const fetchPosts = async () => {
-            const response = await fetch('https://dev.to/api/articles');
-            const data = await response.json();
-            dispatch(setPosts(data))
+            try {
+                const response = await fetch("https://dev.to/api/articles");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch posts");
+                }
+                const data = await response.json();
+                dispatch(setPosts(data))
+            }catch (error) {
+                console.log('Fetch error', error);
+            }
         };
 
         fetchPosts();
@@ -21,9 +27,16 @@ const LatestPosts: React.FC = () => {
 
     return (
         <div>
-            {posts.map((post) => (
-                <div key={post.id}>{post.title}</div>
-            ))}
+            {posts.length > 0 ?(
+                posts.map((post) => (
+                    <div key={post.id}>
+                        <h2>{post.title}</h2>
+                        <p>{post.description}</p>
+                    </div>
+                ))
+            ) : (
+                <p>No posts available</p>
+            )}
         </div>
     );
 };
