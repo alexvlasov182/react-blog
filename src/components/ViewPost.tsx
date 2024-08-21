@@ -1,6 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 
+import "./ViewPost.css";
+
+import {
+    CardMeta,
+    CardHeader,
+    CardDescription,
+    CardContent,
+    Card,
+    Icon,
+    Image,
+} from 'semantic-ui-react'
+
 interface Post {
     id: number;
     title: string;
@@ -45,16 +57,23 @@ const ViewPost: React.FC = () => {
     }
 
     return (
-        <div>
-            {post ? (
-                <div>
-                    <h2>{post.title}</h2>
-                    <p>{post.description}</p>
-                </div>
-            ) : (
-                <p>Loading...</p>
-            )}
-        </div>
+        <>
+            <h1 className="main-title">One Post</h1>
+            <div className="one-card">
+
+                <Card>
+                    {post ? (
+                        <div className="card-content">
+                            <h2><CardContent>{post.title}</CardContent></h2>
+                            <CardContent>{post.description}</CardContent>
+                        </div>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                </Card>
+            </div>
+        </>
+
     );
 };
 

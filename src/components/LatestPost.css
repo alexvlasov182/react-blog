@@ -1,0 +1,50 @@
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 16px;
+    justify-content: center;
+    gap: 16px;
+}
+
+.card {
+    width: 100%;
+    max-width: 300px; /* Adjust based on your design */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card img {
+    max-height: 180px; /* Adjust based on your design */
+    object-fit: cover;
+}
+
+.main-title {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 2rem;
+}
+
+.card .card-content {
+    padding: 16px;
+}
+
+.card .card-header {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+}
+
+.card .card-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+.card .card-content.extra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+}

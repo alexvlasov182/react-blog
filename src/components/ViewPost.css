@@ -1,0 +1,17 @@
+.one-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.card-content {
+    padding: 24px;
+}
+
+.main-title {
+    padding-top: 40px;
+    margin-top: 48px;
+    text-align: center;
+    font-size: 40px;
+}
