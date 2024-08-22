@@ -1,17 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
+import {Card} from 'semantic-ui-react'
 
 import "./ViewPost.css";
-
-import {
-    CardMeta,
-    CardHeader,
-    CardDescription,
-    CardContent,
-    Card,
-    Icon,
-    Image,
-} from 'semantic-ui-react'
 
 interface Post {
     id: number;
@@ -32,19 +23,12 @@ const ViewPost: React.FC = () => {
                     setError('Post ID is missing');
                     return;
                 }
-                const response = await fetch(`https://dev.to/api/articles`);
+                const response = await fetch(`https://dev.to/api/articles/${postId}`);
                 if(!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data: Post[] = await response.json();
-
-                // Find the post by ID
-                const foundPost = data.find(post => post.id === parseInt(postId, 10));
-                if (foundPost) {
-                    setPost(foundPost);
-                } else {
-                    setError('Post not found');
-                }
+                const data: Post = await response.json();
+                setPost(data)
             } catch (error) {
                 setError('Failed to load post');
                 console.error('Fetch error: ', error);
@@ -61,10 +45,9 @@ const ViewPost: React.FC = () => {
         <>
             <h1 className="main-title">One Post</h1>
             <div className="one-card">
-
                 {post ? (
                     <Card className="card-content">
-                        {post.cover_image && <Image src={post.cover_image} wrapped ui={false} />}
+                        {post.cover_image && <img src={post.cover_image} alt={post.title} style={{ width: '100%' }} />}
                         <Card.Content>
                             <Card.Header>{post.title}</Card.Header>
                             <Card.Description>{post.description}</Card.Description>

@@ -1,8 +1,11 @@
-/* Ensure the body and html take the full height and width of the viewport */
 html, body {
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+.main-title {
+    padding-top: 32px;
 }
 
 /* The main container for the post */

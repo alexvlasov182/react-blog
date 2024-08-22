@@ -1,44 +1,25 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState, AppDispatch} from "../../redux/store";
-import {setPosts} from "../../redux/slices/postsSlices";
+import {fetchPostsFromAPI} from "../../redux/slices/postsSlices";
 import { useNavigate } from "react-router-dom";
+import {Card, Icon} from 'semantic-ui-react'
 
 import './LatestPost.css'
 
 
-import {
-    CardMeta,
-    CardHeader,
-    CardDescription,
-    CardContent,
-    Card,
-    Icon,
-    Image,
-} from 'semantic-ui-react'
 
 const LatestPosts: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
-    const posts = useSelector((state: RootState) => state.posts.posts);
+    const fetchedPosts = useSelector((state: RootState) => state.posts.fetchedPosts);
+    const localPosts = useSelector((state: RootState) => state.posts.localPosts);
     const navigate = useNavigate();
 
-
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch("https://dev.to/api/articles");
-                if (!response.ok) {
-                    throw new Error("Failed to fetch posts");
-                }
-                const data = await response.json();
-                dispatch(setPosts(data))
-            }catch (error) {
-                console.log('Fetch error', error);
-            }
-        };
-
-        fetchPosts();
+       dispatch(fetchPostsFromAPI());
     }, [dispatch]);
+
+    const posts = [...localPosts, ...fetchedPosts];
 
     const handleCardClick = (postId: number) => {
         navigate(`/${postId}`);
@@ -51,16 +32,18 @@ const LatestPosts: React.FC = () => {
                 {posts.length > 0 ? (
                     posts.map((post) => (
                         <Card key={post.id} className="card" onClick={() => handleCardClick(post.id)}>
-                            {post.cover_image && <Image src={post.cover_image} wrapped ui={false}/>}
+                            {post.cover_image && <img src={post.cover_image} alt={post.title} style={{ width: '100%' }} />}
                             <Card.Content>
                                 <Card.Header>{post.title}</Card.Header>
                                 <Card.Description>{post.description}</Card.Description>
                             </Card.Content>
                             <Card.Content extra>
-                                <a href={post.url} target="_blank" rel="noopener noreferrer">
-                                    <Icon name='external alternate'/>
-                                    Read more
-                                </a>
+                                <div>
+                                    <div className="link" onClick={() => window.open(post.url, '_blank')}>
+                                        <Icon name='external alternate' />
+                                        Read more
+                                    </div>
+                                </div>
                             </Card.Content>
                         </Card>
                     ))
