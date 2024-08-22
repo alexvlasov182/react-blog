@@ -44,10 +44,11 @@ const ViewPost: React.FC = () => {
     return (
         <>
             <h1 className="main-title">One Post</h1>
+            <a className="link-create-post" href="/">Back to All Posts</a>
             <div className="one-card">
                 {post ? (
                     <Card className="card-content">
-                        {post.cover_image && <img src={post.cover_image} alt={post.title} style={{ width: '100%' }} />}
+                        {post.cover_image && <img src={post.cover_image} alt={post.title} style={{width: '100%'}}/>}
                         <Card.Content>
                             <Card.Header>{post.title}</Card.Header>
                             <Card.Description>{post.description}</Card.Description>
