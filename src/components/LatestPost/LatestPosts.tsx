@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {RootState, AppDispatch} from "../redux/store";
-import {setPosts} from "../redux/slices/postsSlices";
+import {RootState, AppDispatch} from "../../redux/store";
+import {setPosts} from "../../redux/slices/postsSlices";
+import { useNavigate } from "react-router-dom";
 
 import './LatestPost.css'
 
@@ -19,6 +20,7 @@ import {
 const LatestPosts: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
     const posts = useSelector((state: RootState) => state.posts.posts);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -38,13 +40,17 @@ const LatestPosts: React.FC = () => {
         fetchPosts();
     }, [dispatch]);
 
+    const handleCardClick = (postId: number) => {
+        navigate(`/${postId}`);
+    }
+
     return (
         <>
             <h1 className="main-title">All Posts</h1>
             <div className="main-container">
                 {posts.length > 0 ? (
                     posts.map((post) => (
-                        <Card key={post.id} className="card">
+                        <Card key={post.id} className="card" onClick={() => handleCardClick(post.id)}>
                             {post.cover_image && <Image src={post.cover_image} wrapped ui={false}/>}
                             <Card.Content>
                                 <Card.Header>{post.title}</Card.Header>

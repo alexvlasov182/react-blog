@@ -17,6 +17,7 @@ interface Post {
     id: number;
     title: string;
     description: string;
+    cover_image?: string;
 }
 
 const ViewPost: React.FC = () => {
@@ -61,19 +62,19 @@ const ViewPost: React.FC = () => {
             <h1 className="main-title">One Post</h1>
             <div className="one-card">
 
-                <Card>
-                    {post ? (
-                        <div className="card-content">
-                            <h2><CardContent>{post.title}</CardContent></h2>
-                            <CardContent>{post.description}</CardContent>
-                        </div>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </Card>
+                {post ? (
+                    <Card className="card-content">
+                        {post.cover_image && <Image src={post.cover_image} wrapped ui={false} />}
+                        <Card.Content>
+                            <Card.Header>{post.title}</Card.Header>
+                            <Card.Description>{post.description}</Card.Description>
+                        </Card.Content>
+                    </Card>
+                ) : (
+                    <p>Loading...</p>
+                )}
             </div>
         </>
-
     );
 };
 

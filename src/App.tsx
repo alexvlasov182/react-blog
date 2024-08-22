@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import LatestPosts from "./components/LatestPosts";
-import ViewPost from "./components/ViewPost";
+import LatestPosts from "./components/LatestPost/LatestPosts";
+import ViewPost from "./components/ViewPost/ViewPost";
 
 const App: React.FC = () => {
     return (
