@@ -64,6 +64,21 @@ export const createPost = createAsyncThunk(
     }
 );
 
+export const updatePost = createAsyncThunk(
+  'posts/updatePost',
+  async (updatedPost: Post, {getState}) => {
+    const state = getState() as {posts: PostsState};
+    const postIndex = state.posts.localPosts.findIndex(post => post.id === updatedPost.id)
+    if (postIndex !== -1) {
+      const updatedLocalPosts = [...state.posts.localPosts];
+      updatedLocalPosts[postIndex] = updatedPost;
+      localStorage.setItem('localPosts', JSON.stringify(updatedLocalPosts));
+      return updatedPost;
+    }
+    throw new Error('Post not found');
+  }
+)
+
 export const deletePost = createAsyncThunk(
     'posts/deletePost',
     async (postId: number, {getState}) => {
@@ -77,15 +92,7 @@ export const deletePost = createAsyncThunk(
 const postsSlice = createSlice({
     name: 'posts',
     initialState,
-    reducers: {
-        setFetchedPosts: (state, action: PayloadAction<Post[]>) => {
-            state.fetchedPosts = action.payload
-        },
-        addLocalPost: (state, action: PayloadAction<Post>) => {
-            state.localPosts.push(action.payload);
-            saveLocalPosts(state.localPosts);
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchPostsFromAPI.fulfilled, (state, action) => {
             state.fetchedPosts = action.payload;
@@ -99,9 +106,16 @@ const postsSlice = createSlice({
 
         builder.addCase(deletePost.fulfilled, (state, action) => {
             state.localPosts = state.localPosts.filter(post => post.id !== action.payload);
-        })
+        });
+
+        builder.addCase(updatePost.fulfilled, (state, action) => {
+          const index = state.localPosts.findIndex(post => post.id === action.payload.id);
+          if (index !== -1) {
+            state.localPosts[index] = action.payload;
+            saveLocalPosts(state.localPosts);
+          }
+        });
     },
 });
 
-export const { setFetchedPosts, addLocalPost } = postsSlice.actions;
 export default postsSlice.reducer;

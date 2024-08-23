@@ -18,6 +18,7 @@
 .card img {
     max-height: 180px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .main-title {
@@ -29,6 +30,7 @@
 
 .card .card-content {
     padding: 16px;
+    cursor: pointer;
 }
 
 .card .card-header {
@@ -39,6 +41,7 @@
 .card .card-description {
     font-size: 1rem;
     color: #666;
+
 }
 
 .card .card-content.extra {
@@ -88,5 +91,38 @@
     user-select: none;
     box-shadow: 0 0 0 1px #db2828 inset !important;
     color: #db2828 !important;
+}
+
+.edit-button {
+    cursor: pointer;
+    display: inline-block;
+    min-height: 1em;
+    outline: 0;
+    border: none;
+    vertical-align: baseline;
+    background: transparent none !important;
+    font-weight: 400;
+    border-radius: .28571429rem;
+    text-transform: none;
+    color: rgba(0, 0, 0, .6);
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    margin: 0 .25em 0 0;
+    padding: .78571429em 1.5em .78571429em;
+    text-shadow: none;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    box-shadow: 0 0 0 1px #21ba45 inset!important;
+    color: #21ba45!important;
+}
+
+.ui.card {
+     margin: 0 !important;
+}
+
+.content {
+    cursor: pointer !important;
 }
 
